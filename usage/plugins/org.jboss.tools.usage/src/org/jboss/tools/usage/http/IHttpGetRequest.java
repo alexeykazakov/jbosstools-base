@@ -17,6 +17,6 @@ package org.jboss.tools.usage.http;
  */
 public interface IHttpGetRequest {
 
-	public abstract void request(String urlString);
+	public abstract boolean request(String urlString);
 
 }

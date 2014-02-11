@@ -22,4 +22,36 @@
             class="org.jboss.tools.usage.internal.preferences.UsageReportPreferenceInitializer">
       </initializer>
    </extension>
+
+   	<extension
+         point="org.eclipse.ui.commands">
+      	<command
+            	categoryId="org.eclipse.ui.category.navigate"
+            	id="org.jboss.tools.usage.testRequest"
+            	name="SendUsageRequest">
+      	</command>
+	</extension>
+	<extension
+		point="org.eclipse.ui.menus">
+	    <menuContribution
+          locationURI="toolbar:org.eclipse.ui.main.toolbar?after=org.eclipse.search.searchActionSet">
+       	<toolbar
+             id="org.jboss.tools.usage.toolbar">
+          <command
+                commandId="org.jboss.tools.usage.testRequest"
+                id="org.jboss.tools.usage.testRequestToolBar"
+                label="SendUsageRequest"
+                tooltip="SendUsageRequest">
+          </command>
+       </toolbar>
+    </menuContribution>
+    </extension>
+    
+    <extension
+       point="org.eclipse.ui.handlers">
+       <handler
+             class="org.jboss.tools.temp.usage.internal.reporting.test.SendReportHandler"
+             commandId="org.jboss.tools.usage.testRequest">
+       </handler>
+       </extension>
 </plugin>

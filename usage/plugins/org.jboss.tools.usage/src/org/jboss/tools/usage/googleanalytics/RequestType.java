@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Red Hat, Inc.
+ * Copyright (c) 2014 Red Hat, Inc.
  * Distributed under license by Red Hat, Inc. All rights reserved.
  * This program is made available under the terms of the
  * Eclipse Public License v1.0 which accompanies this distribution,
@@ -8,16 +8,23 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.usage.http;
-
-import java.io.IOException;
-import java.util.Map;
+package org.jboss.tools.usage.googleanalytics;
 
 /**
- * @author André Dietisheim
+ * @author Alexey Kazakov
  */
-public interface IPropertiesProvider {
+public enum RequestType {
+	EVENT("event"),
+	PAGE("page");
 
-	public Map<Object, Object> getMap() throws IOException;
+	String type;
 
+	private RequestType(String type) {
+		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		return type;
+	}
 }

@@ -44,7 +44,7 @@ public class UsageReport {
 
 	private IJBossToolsEclipseEnvironment eclipseEnvironment;
 
-	UsagePluginLogger logger = new UsagePluginLogger(JBossToolsUsageActivator.getDefault());
+	UsagePluginLogger logger = JBossToolsUsageActivator.getDefault().getLogger();
 
 	public UsageReport() {
 		this(JBossToolsUsageActivator.getDefault().getJBossToolsEclipseEnvironment());

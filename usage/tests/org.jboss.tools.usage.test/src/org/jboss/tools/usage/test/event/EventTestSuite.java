@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Red Hat, Inc.
+ * Copyright (c) 2014 Red Hat, Inc.
  * Distributed under license by Red Hat, Inc. All rights reserved.
  * This program is made available under the terms of the
  * Eclipse Public License v1.0 which accompanies this distribution,
@@ -8,16 +8,19 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.usage.http;
+package org.jboss.tools.usage.test.event;
 
-import java.io.IOException;
-import java.util.Map;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
- * @author André Dietisheim
+ * @author Alexey Kazakov
  */
-public interface IPropertiesProvider {
-
-	public Map<Object, Object> getMap() throws IOException;
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+		UsageEventTest.class,
+		EventRegisterTest.class,
+		UsageReporterTest.class})
+public class EventTestSuite {
 
 }

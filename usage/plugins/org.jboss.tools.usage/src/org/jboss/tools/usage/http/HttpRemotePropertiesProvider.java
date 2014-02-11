@@ -20,10 +20,10 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.jboss.tools.usage.tracker.internal.UsagePluginLogger;
 import org.jboss.tools.usage.util.HttpEncodingUtils;
-import org.jboss.tools.usage.util.reader.ReaderUtils;
 
 
 /**
@@ -37,7 +37,7 @@ public class HttpRemotePropertiesProvider implements IPropertiesProvider {
 
 	static final String GET_METHOD_NAME = "GET"; //$NON-NLS-1$
 
-	private Map<String, String> valuesMap;
+	private Map<Object, Object> valuesMap;
 	private String[] keys;
 	private String url;
 	private char valueDelimiter;
@@ -54,11 +54,11 @@ public class HttpRemotePropertiesProvider implements IPropertiesProvider {
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.usage.http.IMapProvider#getValueMap()
 	 */
-	public Map<String, String> getMap() throws IOException {
+	public Map<Object, Object> getMap() throws IOException {
 		if (valuesMap == null) {
 			HttpURLConnection urlConnection = createURLConnection(url);
 			InputStreamReader reader = request(urlConnection);
-			this.valuesMap = parse(keys, valueDelimiter, reader, new HashMap<String, String>());
+			this.valuesMap = read(reader);
 		}
 		return valuesMap;
 	}
@@ -104,23 +104,10 @@ public class HttpRemotePropertiesProvider implements IPropertiesProvider {
 		}
 	}
 
-	/**
-	 * Parses the given string and extracts the enablement value.
-	 * 
-	 * @param valueDelimiter
-	 * 
-	 * @param input
-	 *            stream that holds
-	 * @return
-	 * @return true, if successful
-	 */
-	private Map<String, String> parse(String[] keys, char valueDelimiter, InputStreamReader reader,
-			Map<String, String> valuesMap) throws IOException {
-		for (String key = null; (key = ReaderUtils.skipUntil(reader, keys)) != null;) {
-			String value = ReaderUtils.readStringUntil(reader, valueDelimiter);
-			valuesMap.put(key, value);
-		}
-		return valuesMap;
+	private Map<Object, Object> read(InputStreamReader reader) throws IOException {
+		Properties pr = new Properties();
+		pr.load(reader);
+		return pr;
 	}
 
 	/**

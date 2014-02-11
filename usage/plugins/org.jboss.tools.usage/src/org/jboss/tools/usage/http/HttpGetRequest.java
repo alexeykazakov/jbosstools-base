@@ -40,13 +40,15 @@ public class HttpGetRequest implements IHttpGetRequest {
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.usage.IHttpGetRequest#request(java.lang.String)
 	 */
-	public void request(String urlString) {
+	public boolean request(String urlString) {
 
+		boolean result = false;
 		try {
 			HttpURLConnection urlConnection = createURLConnection(urlString, userAgent);
 			urlConnection.connect();
 			int responseCode = getResponseCode(urlConnection);
 			if (responseCode == HttpURLConnection.HTTP_OK) {
+				result = true;
 				logger.debug(MessageFormat.format(HttpMessages.HttpGetMethod_Success, urlString, responseCode));
 			} else {
 				logger.error(MessageFormat.format(HttpMessages.HttpGetMethod_Error_Http, urlString, responseCode));
@@ -54,6 +56,7 @@ public class HttpGetRequest implements IHttpGetRequest {
 		} catch (Exception e) {
 			logger.debug(MessageFormat.format(HttpMessages.HttpGetMethod_Error_Io, urlString, e.toString()));
 		}
+		return result;
 	}
 
 	/**
